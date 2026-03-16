@@ -1,24 +1,39 @@
+// Rock-Paper-Scissors (5 rounds)
+// -----------------------------
+// Keeps score across 5 rounds so the user can see who wins the match.
+// It runs in the browser console and offers an option to replay without
+// reloading the page.
+
+// Returns a random move for the computer so the game feels unpredictable.
 function getComputerChoice() {
   const choices = ["rock", "paper", "scissors"];
   const randomIndex = Math.floor(Math.random() * choices.length);
   return choices[randomIndex];
 }
 
+// Collects the player's move and ensures the game can progress.
+// Keeps asking until a valid choice is provided.
 function getHumanChoice() {
   const choices = ["rock", "paper", "scissors"];
+
   while (true) {
     const input = prompt("Enter rock, paper, or scissors:").trim().toLowerCase();
     if (choices.includes(input)) return input;
+
+    // Prevents invalid input from breaking the game flow.
     alert("Please enter rock, paper, or scissors.");
   }
 }
 
+// Manages a full match of 5 rounds and tracks overall score.
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
 
+  // Makes output messages easier to read when displayed in the console.
   const capitalize = (word) => word[0].toUpperCase() + word.slice(1);
 
+  // Determines the winner of one round and provides a message to display.
   function playRound(humanChoice, computerChoice) {
     const human = humanChoice.trim().toLowerCase();
     const computer = computerChoice.trim().toLowerCase();
@@ -39,14 +54,14 @@ function playGame() {
     const humanWins = winningPairs[human] === computer;
     const winnerChoice = humanWins ? human : computer;
     const loserChoice = humanWins ? computer : human;
-    const message = `${humanWins ? "You win" : "You lose"}! ${capitalize(winnerChoice)} beats ${capitalize(loserChoice)}.`;
 
     return {
       winner: humanWins ? "human" : "computer",
-      message,
+      message: `${humanWins ? "You win" : "You lose"}! ${capitalize(winnerChoice)} beats ${capitalize(loserChoice)}.`,
     };
   }
 
+  // Run a fixed number of rounds to give the user a complete match.
   for (let round = 1; round <= 5; round += 1) {
     const humanChoice = getHumanChoice();
     const computerChoice = getComputerChoice();
@@ -63,6 +78,7 @@ function playGame() {
     console.log(`Score: You ${humanScore} - Computer ${computerScore}`);
   }
 
+  // Declare the overall game winner.
   if (humanScore > computerScore) {
     console.log("Game over: You win the game!");
   } else if (computerScore > humanScore) {
@@ -72,6 +88,7 @@ function playGame() {
   }
 }
 
+// Allow the player to restart the match without reloading the page.
 do {
   playGame();
 } while (confirm("Play again?"));
