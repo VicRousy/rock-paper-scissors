@@ -73,65 +73,68 @@ function setGameOver(winner) {
 function playRound(humanChoice) {
   if (gameOver) return; // ignore clicks after the match ends
 
-  const computerChoice = getComputerChoice();
-  const human = humanChoice.trim().toLowerCase();
+  const computerChoice = getComputerChoice(); // computer picks randomly
+  const human = humanChoice.trim().toLowerCase(); // clean up input
   const computer = computerChoice.trim().toLowerCase();
 
   if (human === computer) {
     const message = `It's a tie! You both chose ${capitalize(human)}.`;
-    appendResultLine(message);
-    console.log(message);
-    return;
+    appendResultLine(message); // show result in UI
+    console.log(message); // also log to console for debugging
+    return; // no score change on tie
   }
 
+  // Check if human's choice beats computer's (e.g., rock beats scissors)
   const humanWins = winningPairs[human] === computer;
   const winnerChoice = humanWins ? human : computer;
   const loserChoice = humanWins ? computer : human;
 
   const message = `${humanWins ? "You win" : "You lose"}! ${capitalize(winnerChoice)} beats ${capitalize(loserChoice)}.`;
 
+  // Update scores based on who won
   if (humanWins) {
-    humanScore += 1;
+    humanScore += 1; // add 1 to player's score
   } else {
-    computerScore += 1;
+    computerScore += 1; // add 1 to computer's score
   }
 
-  updateScoreDisplay();
-  appendResultLine(message);
-  console.log(message);
-  console.log(`Score: You ${humanScore} - Computer ${computerScore}`);
+  updateScoreDisplay(); // refresh the score in the UI
+  appendResultLine(message); // show the round result
+  console.log(message); // log for debugging
+  console.log(`Score: You ${humanScore} - Computer ${computerScore}`); // log current score
 
   // If either player has 5 points, declare a winner.
   if (humanScore >= 5 || computerScore >= 5) {
     const winner = humanScore > computerScore ? "human" : "computer";
-    setGameOver(winner);
+    setGameOver(winner); // end the game
   }
 }
 
 // Resets the match state so the user can play again.
 function resetGame() {
-  humanScore = 0;
-  computerScore = 0;
-  gameOver = false;
+  humanScore = 0; // reset player's score to 0
+  computerScore = 0; // reset computer's score to 0
+  gameOver = false; // allow new rounds to be played
 
   // Clear the previously displayed results.
-  resultsEl.innerHTML = "";
+  resultsEl.innerHTML = ""; // remove all result messages
 
   // Hide reset button and re-enable play buttons.
-  resetBtn.hidden = true;
-  rockBtn.disabled = false;
-  paperBtn.disabled = false;
-  scissorsBtn.disabled = false;
+  resetBtn.hidden = true; // hide the "Play again" button
+  rockBtn.disabled = false; // make rock button clickable again
+  paperBtn.disabled = false; // make paper button clickable again
+  scissorsBtn.disabled = false; // make scissors button clickable again
 
-  updateScoreDisplay();
+  updateScoreDisplay(); // show the reset score (0-0)
 }
 
 // Hook up the UI buttons to game logic.
+// When a button is clicked, call playRound with the corresponding choice.
 rockBtn.addEventListener("click", () => playRound("rock"));
 paperBtn.addEventListener("click", () => playRound("paper"));
 scissorsBtn.addEventListener("click", () => playRound("scissors"));
-resetBtn.addEventListener("click", resetGame);
+resetBtn.addEventListener("click", resetGame); // reset when "Play again" is clicked
 
 // Initialize the UI on page load.
-updateScoreDisplay();
-appendResultLine("Click a button to start playing!");
+updateScoreDisplay(); // show initial score
+appendResultLine("Click a button to start playing!"); // welcome message

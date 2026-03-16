@@ -3,25 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <title>Rock Paper Scissors</title>
+        <!-- Basic styling to make the game look clean and readable -->
         <style>
+            /* Set a modern font and spacing for the whole page */
             body {
                 font-family: system-ui, sans-serif;
                 margin: 1.5rem;
                 line-height: 1.4;
             }
 
+            /* Arrange the buttons in a row with some space between them */
             #controls {
                 display: flex;
                 gap: 0.5rem;
                 margin: 1rem 0;
             }
 
+            /* Make buttons look clickable and consistent */
             button {
                 padding: 0.6rem 1rem;
                 font-size: 1rem;
                 cursor: pointer;
             }
 
+            /* Add small spacing between result messages */
             #results p {
                 margin: 0.25rem 0;
             }
@@ -44,7 +49,7 @@
             <!-- Results area: each round’s outcome is appended here. -->
             <div id="results" aria-live="polite"></div>
 
-            <!-- Appears once someone reaches 5 points to restart the match. -->
+            <!-- Button to restart the game (hidden until the game ends) -->
             <button id="reset" type="button" hidden>Play again</button>
         </main>
 
