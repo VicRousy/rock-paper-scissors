@@ -1,10 +1,53 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8"> 
-        <title>Rock Paper Scissors</title>  
+        <meta charset="UTF-8">
+        <title>Rock Paper Scissors</title>
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                margin: 1.5rem;
+                line-height: 1.4;
+            }
+
+            #controls {
+                display: flex;
+                gap: 0.5rem;
+                margin: 1rem 0;
+            }
+
+            button {
+                padding: 0.6rem 1rem;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+
+            #results p {
+                margin: 0.25rem 0;
+            }
+        </style>
     </head>
     <body>
+        <main>
+            <h1>Rock Paper Scissors</h1>
+
+            <!-- Displays the current score. The JS updates this on each round. -->
+            <div id="score" aria-live="polite">Score: You 0 - Computer 0</div>
+
+            <!-- Player controls: clicking a button plays one round. -->
+            <div id="controls">
+                <button id="rock" type="button">Rock</button>
+                <button id="paper" type="button">Paper</button>
+                <button id="scissors" type="button">Scissors</button>
+            </div>
+
+            <!-- Results area: each round’s outcome is appended here. -->
+            <div id="results" aria-live="polite"></div>
+
+            <!-- Appears once someone reaches 5 points to restart the match. -->
+            <button id="reset" type="button" hidden>Play again</button>
+        </main>
+
         <script src="script.js"></script>
     </body>
 </html>
